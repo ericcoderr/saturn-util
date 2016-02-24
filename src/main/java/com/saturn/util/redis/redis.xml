@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxActive" value="300" /><!-- 设置链接池最大链接数 -->
+		<property name="maxIdle" value="100" /><!--最大空闲 连接数 -->
+		<property name="testOnBorrow" value="false" /><!-- 调用borrowObject() 
+			测试链接是否可用，不可用，从池中释放，获取新的 -->
+		<property name="testOnReturn" value="false" />
+	</bean>
+
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1" value="218.16.224.89" />
+		<constructor-arg index="2" value="6379" />
+		<constructor-arg index="3" value="5000" /><!-- 链接超时时间 default:2000( 
+			second) -->
+	</bean>
+
+	<bean id="jedisTemplateTest" class="com.saturn.util.redis.core.JedisTemplate">
+		<constructor-arg index="0" ref="jedisPool" />
+	</bean>
+
+	<bean id="pubSubListener" class="tauren.jedis.pubsub.mq.JedisPubSubListener">
+		<!-- 构造器里面 index=0是 渠道订阅 ，index=1是正则表达式订阅 -->
+		<constructor-arg index="0">
+			<list>
+				<value>default_test</value>
+			</list>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<list>
+				<value>pattern1*</value>
+			</list>
+		</constructor-arg>
+		<property name="redisMqPusher" ref="redisMqPusher" />
+		<property name="redisMqPoperMap">
+			<map>
+				<entry key="default">
+					<ref local="redisMQPoperDefault" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="redisMqPusher" class="tauren.jedis.pubsub.mq.RedisMQPusher">
+		<constructor-arg index="0" ref="jedisPool" />
+	</bean>
+
+	<!-- 具体实现类，放到业务配置里 -->
+	<bean id="redisMQPoperDefault" class="tauren.jedis.pubsub.mq.RedisMQPoperDefault">
+		<constructor-arg index="0" ref="jedisPool" />
+		<!-- 线程池大小 -->
+		<constructor-arg index="1" value="10" />
+	</bean>
+
+	<bean id="jedisTemplateTest1" class="com.saturn.util.redis.core.JedisTemplate">
+		<constructor-arg index="0" ref="jedisPool" />
+		<constructor-arg index="1" value="redis-9898w" />
+		<constructor-arg index="2" value="true" />
+	</bean>
+
+
+</beans>

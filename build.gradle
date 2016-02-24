@@ -1,0 +1,32 @@
+archivesBaseName = 'saturn-util'    		
+
+dependencies {
+    compile (
+    	libraries.'commons-lang3',
+    	libraries.'logback-classic',
+    	libraries.'logback-core',
+    	libraries.'jcl-over-slf4j',
+    	libraries.'log4j-over-slf4j',
+    	libraries.'slf4j-api',
+    	libraries.'httpclient',
+    	libraries.'httpcore',
+    	libraries.'jackson-annotations',
+    	libraries.'jackson-core',
+    	libraries.'jackson-databind',
+    	libraries.'jackson-xml',
+    	libraries.'jedis',
+    	libraries.'mongodb',
+    	libraries.'spring-beans'
+    )
+}
+
+
+task copyJars(type: Copy) {
+  from configurations.runtime
+  into 'libs' // 目标位置
+}
+//build.dependsOn copyJars
+copyJars.mustRunAfter build
+
+
+

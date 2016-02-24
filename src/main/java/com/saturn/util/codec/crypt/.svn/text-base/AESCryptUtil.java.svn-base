@@ -1,0 +1,99 @@
+package com.xunlei.util.codec.crypt;
+
+import org.slf4j.Logger;
+import com.xunlei.util.Log;
+import com.xunlei.util.StringHelper;
+import com.xunlei.util.codec.DigestUtils;
+
+/**
+ * @author ZengDong
+ * @since 2011-6-17 下午03:35:02
+ */
+public class AESCryptUtil {
+
+    /**
+     * AES加密类池
+     */
+    public static final ThreadLocal<AESCrypt> aesCryptFactory = new ThreadLocal<AESCrypt>() {
+
+        @Override
+        protected synchronized AESCrypt initialValue() {
+            try {
+                AESCrypt aes = new AESCrypt();
+                return aes;
+            } catch (Exception e) {
+                log.error("", e);
+            }
+            return null;
+        }
+    };
+    private static final Logger log = Log.getLogger();
+
+    /**
+     * @param aesSecretKey
+     * @param needDecodeContent
+     * @return
+     * @throws Exception
+     */
+    public static byte[] aesDecode(byte[] aesSecretKey, byte[] needDecodeContent) throws Exception {
+        AESCrypt aes = aesCryptFactory.get();
+        aes.setSecretKey(aesSecretKey);
+        return aes.decode(needDecodeContent);
+    }
+
+    /**
+     * @param aesSecretKey
+     * @param needEncodeContent
+     * @return
+     * @throws Exception
+     */
+    public static byte[] aesEncode(byte[] aesSecretKey, byte[] needEncodeContent) throws Exception {
+        AESCrypt aes = aesCryptFactory.get();
+        aes.setSecretKey(aesSecretKey);
+        return aes.encode(needEncodeContent);
+    }
+
+    /**
+     * 返回一个AESCrypt,其使用needMd5ToSecretKey的md5后的byte[]来作为secretKey
+     * 
+     * @param needMd5ToSecretKey
+     * @return
+     */
+    public static AESCrypt getAesByMd5(byte[] needMd5ToSecretKey) {
+        AESCrypt aes = aesCryptFactory.get();
+        aes.setSecretKey(getSecretKeyByMd5(needMd5ToSecretKey));
+        return aes;
+    }
+
+    /**
+     * 返回一个AESCrypt,其使用needMd5ToSecretKey的字符串拼接后md5返回的byte[]来作为secretKey
+     * 
+     * @param needMd5ToSecretKey
+     * @return
+     */
+    public static AESCrypt getAesByMd5(Object... needMd5ToSecretKey) {
+        AESCrypt aes = aesCryptFactory.get();
+        aes.setSecretKey(getSecretKeyByMd5(needMd5ToSecretKey));
+        return aes;
+    }
+
+    /**
+     * md5(needMd5ToSecretKey),主要用于AESCrypt的secretKey
+     * 
+     * @param needMd5ToSecretKey
+     * @return
+     */
+    public static byte[] getSecretKeyByMd5(byte[] needMd5ToSecretKey) {
+        return DigestUtils.md5(needMd5ToSecretKey);
+    }
+
+    /**
+     * 字符串拼接 needMd5ToSecretKey这些值,然后md5,主要用于AESCrypt的secretKey
+     * 
+     * @param needMd5ToSecretKey
+     * @return
+     */
+    public static byte[] getSecretKeyByMd5(Object... needMd5ToSecretKey) {
+        return DigestUtils.md5(StringHelper.concate(needMd5ToSecretKey));
+    }
+}

@@ -1,0 +1,9 @@
+<included>
+	<property name="NORMAL_PATTERN" value="%d{HH:mm:ss}|%40.40(%c{30}.%-5M)|%X{ip}|%-5.5p %m \\(%file:%line\\) %-5(%thread) %n" />
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.out</target>
+		<encoder>
+			<pattern>${NORMAL_PATTERN}</pattern>
+		</encoder>
+	</appender>
+</included>

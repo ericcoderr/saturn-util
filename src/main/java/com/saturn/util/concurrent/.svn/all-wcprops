@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/13_233_svn/XLServerFramework/!svn/ver/2250/trunk/ServerUtil/src/util/com/xunlei/util/concurrent
+END
+Bench.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/13_233_svn/XLServerFramework/!svn/ver/2200/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/Bench.java
+END
+BaseRunnableWithMail.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/13_233_svn/XLServerFramework/!svn/ver/2200/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/BaseRunnableWithMail.java
+END
+ConcurrentUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/13_233_svn/XLServerFramework/!svn/ver/2250/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/ConcurrentUtil.java
+END
+BaseRunnable.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/13_233_svn/XLServerFramework/!svn/ver/2205/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/BaseRunnable.java
+END
+ConcurrentHashSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/13_233_svn/XLServerFramework/!svn/ver/2200/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/ConcurrentHashSet.java
+END
+NamedThreadFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/13_233_svn/XLServerFramework/!svn/ver/2200/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/NamedThreadFactory.java
+END
+BaseJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/13_233_svn/XLServerFramework/!svn/ver/2205/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/BaseJob.java
+END
+BaseSchedulable.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/13_233_svn/XLServerFramework/!svn/ver/2205/trunk/ServerUtil/src/util/com/xunlei/util/concurrent/BaseSchedulable.java
+END

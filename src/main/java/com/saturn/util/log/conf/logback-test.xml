@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+	<include resource="logback-included.xml" />
+	<include resource="logback-spec.xml" />	
+	<appender name="rolling_file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<file>logs/logFile.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/logFile.%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${NORMAL_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- <appender name="file" class="ch.qos.logback.core.FileAppender">
+		<file>logs/server.log</file>
+		<encoder>
+			<pattern>${NORMAL_PATTERN}</pattern>
+		</encoder>
+	</appender> -->
+
+
+	<logger name="httpclient.wire" level="INFO" />
+	<logger name="net.rubyeye.xmemcached" level="WARN" />
+	<logger name="com.google.code.yanf4j" level="WARN" />
+
+	<logger name="org.quartz" level="WARN" />
+	<logger name="org.springframework" level="INFO" />
+
+	<logger name="org.apache.mina" level="INFO" />
+	<logger name="org.apache.http" level="INFO" />
+	<logger name="org.apache.commons.beanutils" level="WARN" />
+	<logger name="org.apache.commons.httpclient" level="INFO" />
+
+	<logger name="com.mchange" level="WARN" />
+
+	<root level="debug">
+		<appender-ref ref="stdout" />
+		<!-- <appender-ref ref="file" /> -->
+		<appender-ref ref="rolling_file" />
+	</root>
+</configuration>

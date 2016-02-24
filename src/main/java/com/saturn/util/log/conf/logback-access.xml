@@ -1,0 +1,31 @@
+﻿<configuration>
+    <!-- common,clf:%h %l %u %t \"%r\" %s %b -->
+    <!-- combined:%h %l %u %t \"%r\" %s %b \"%i{Referer}\" \"%i{User-Agent}\" -->
+
+    <!-- %9reqCookie{userid} -->
+    <property name="ACCESS_NORMAL_PATTERN" value="%t{HH:mm:ss}|%9reqCookie{userid}|%20(%remoteIP:%remotePort)|%5b|%3s|%U|%reqParameter|%responseContentSimple{1,LHB}" />
+
+    <appender name="access_file" class="ch.qos.logback.core.rolling.AsyncRollingFileAppender">
+        <append>true</append>
+        <file>logs/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/access.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${ACCESS_NORMAL_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="stderr" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+        <encoder>
+            <Pattern>${ACCESS_NORMAL_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender-ref ref="stderr" />
+</configuration>

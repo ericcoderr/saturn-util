@@ -1,0 +1,35 @@
+package com.xunlei.util.codec.crypt;
+
+import org.slf4j.Logger;
+import com.xunlei.util.Log;
+
+/**
+ * RSA算法的调用工具
+ * 
+ * @author ZengDong
+ * @since 2011-6-17 下午03:55:45
+ */
+public class RSACryptUtil {
+
+    /**
+     * RSA加密类池
+     */
+    private static final Logger log = Log.getLogger();
+
+    public static ThreadLocal<RSACrypt> getRsaCryptFactory(final byte[] rsaPrivateKey) {
+        return new ThreadLocal<RSACrypt>() {
+
+            @Override
+            protected synchronized RSACrypt initialValue() {
+                try {
+                    RSACrypt rsa = new RSACrypt();
+                    rsa.setPrivateKey(rsaPrivateKey);
+                    return rsa;
+                } catch (Exception e) {
+                    log.error("", e);
+                }
+                return null;
+            }
+        };
+    }
+}
